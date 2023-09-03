@@ -41,6 +41,7 @@ else()
             wfctile.h wfctile.cpp
             ITilePresenter.h
             tilepresenter.h tilepresenter.cpp
+            DataStructures.h
         )
     endif()
 endif()
