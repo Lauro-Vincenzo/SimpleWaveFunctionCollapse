@@ -26,6 +26,9 @@ build*/
 *.a
 *.lib
 
+#CMake
+CMakeLists.txt.user
+
 # Executables
 *.exe
 *.out

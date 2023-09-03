@@ -24,6 +24,5 @@ void MainWindow::AddWidget(std::unique_ptr<QWidget> widgetToAdd, const Vector2D&
     storedWidgets.push_back(std::shared_ptr<QWidget>(std::move(widgetToAdd)));
 
     layout()->addWidget(storedWidgets.back().get());
-
 }
 
