@@ -4,14 +4,16 @@
 #include "./ui_mainwindow.h"
 #include "DataStructures.h"
 
-static constexpr float APP_RELATIVE_WIDTH{0.888};
-static constexpr float APP_RELATIVE_HEIGHT{0.5};
+static constexpr float SPAWN_X{50};
+static constexpr float SPAWN_Y{50};
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    setFixedSize(QDesktopWidget().availableGeometry(this).width(),QDesktopWidget().availableGeometry(this).height());
+    const auto uiWidth = QDesktopWidget().availableGeometry(this).width()*0.35;
+    const auto uiHeight = QDesktopWidget().availableGeometry(this).height()*0.5;
+    setFixedSize(uiWidth, uiHeight);
     ui->setupUi(this);
 }
 
