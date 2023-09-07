@@ -11,10 +11,12 @@
 
 #include "wfctile.h"
 
-static constexpr Vector2D BUTTON_DEFAULT_SIZE{100,30};
 static constexpr Vector2D BUTTON_CONTAINER_POSITION{250,50};
-static constexpr int ROWS_NUM{12};
-static constexpr int COLUMNS_NUM{12};
+static constexpr Vector2D TOPLEFT_STARTPOINT{0,0};
+
+static constexpr double MAP_WIDTH_FILL_FACTOR{0.70};
+static constexpr int ROWS_NUM{8};
+static constexpr int COLUMNS_NUM{8};
 
 void InitializeMainWindow(MainWindow* mainWindow);
 QLabel* CreateMap();
@@ -44,10 +46,7 @@ QLabel* CreateMap(){
     for(int rowIndex=0; rowIndex<ROWS_NUM; rowIndex++){
         for(int columnIndex=0; columnIndex<COLUMNS_NUM; columnIndex++){
             auto tileButton = new QPushButton("");
-
-            //TODO FIXME: Adjust this hardcoded value.
-            const auto height = mapLabel->height()/ROWS_NUM + 3;
-            tileButton->setFixedHeight(height);
+            tileButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
             gridLayout->addWidget(tileButton, columnIndex, rowIndex);
         }
     }
@@ -56,24 +55,24 @@ QLabel* CreateMap(){
 }
 
 void InitializeMainWindow(MainWindow* mainWindow){
-    const Vector2D totalWindowSize = {mainWindow->width(),mainWindow->height()};
-    auto mapLabel = CreateMap();
+    const auto& mapLabel = CreateMap();
 
-    auto resetButton = new QPushButton("Reset");
-    auto solveButton = new QPushButton("Solve");
+    const auto& buttonContainerWidget = new QWidget();
+    const auto& buttonVBox = new QVBoxLayout(buttonContainerWidget);
 
-    auto buttonContainerWidget = new QWidget();
-    auto buttonVBox = new QVBoxLayout(buttonContainerWidget);
+    const auto& resetButton = new QPushButton("Reset");
+    const auto& solveButton = new QPushButton("Solve");
     buttonVBox->addWidget(resetButton);
     buttonVBox->addWidget(solveButton);
 
-    const auto squaredMapSide = mainWindow->width()*0.75;
+    const int& squaredMapSide = mainWindow->width()*MAP_WIDTH_FILL_FACTOR;
 
     const Vector2D screenSize = {squaredMapSide,squaredMapSide};
-    const Vector2D buttonSize = {squaredMapSide*0.25,squaredMapSide};
-    const Vector2D buttonPosition = {screenSize.X,0};
 
-    mainWindow->AddWidget(mapLabel, screenSize, {0,0});
+    const Vector2D buttonSize = {int(squaredMapSide*0.25),squaredMapSide};
+    const Vector2D buttonPosition = {squaredMapSide,0};
+
+    mainWindow->AddWidget(mapLabel, screenSize, TOPLEFT_STARTPOINT);
     mainWindow->AddWidget(buttonContainerWidget, buttonSize, buttonPosition);
 }
 
