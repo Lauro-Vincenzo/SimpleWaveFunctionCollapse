@@ -6,6 +6,7 @@
 
 #include <QApplication>
 #include <QPushButton>
+ #include <QToolButton>
 #include <QLabel>
 #include <QGridLayout>
 
@@ -15,8 +16,10 @@ static constexpr Vector2D BUTTON_CONTAINER_POSITION{250,50};
 static constexpr Vector2D TOPLEFT_STARTPOINT{0,0};
 
 static constexpr double MAP_WIDTH_FILL_FACTOR{0.70};
-static constexpr int ROWS_NUM{8};
-static constexpr int COLUMNS_NUM{8};
+static constexpr int ROWS_NUM{12};
+static constexpr int COLUMNS_NUM{12};
+
+static const char* PLACEHOLDER_IMAGE_PATH{"/home/vincenzo/Documents/C++/WaveFunctionCollapse/WaveFunctionCollapse/chopper.png"};
 
 void InitializeMainWindow(MainWindow* mainWindow);
 QLabel* CreateMap();
@@ -45,8 +48,17 @@ QLabel* CreateMap(){
 
     for(int rowIndex=0; rowIndex<ROWS_NUM; rowIndex++){
         for(int columnIndex=0; columnIndex<COLUMNS_NUM; columnIndex++){
-            auto tileButton = new QPushButton("");
+            auto widget = new QWidget();
+            auto tileButton = new QPushButton(widget);
+
+            const auto* icon = new QIcon(PLACEHOLDER_IMAGE_PATH);
+
+            tileButton->setIcon(*icon);
             tileButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+            const auto& buttonSize = tileButton->size();
+
+            tileButton->setIconSize(buttonSize);
             gridLayout->addWidget(tileButton, columnIndex, rowIndex);
         }
     }
