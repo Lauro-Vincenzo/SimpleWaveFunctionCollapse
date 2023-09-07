@@ -17,10 +17,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void AddWidget(std::unique_ptr<QWidget> widgetToAdd, const Vector2D& size ,const Vector2D& position);
+    void AddWidget(QWidget* widgetToAdd, const Vector2D& size ,const Vector2D& position);
 
 private:
     Ui::MainWindow *ui;
-    std::vector<std::shared_ptr<QWidget>> storedWidgets{};
 };
 #endif // MAINWINDOW_H

@@ -7,14 +7,19 @@
 #include <QApplication>
 #include <QPushButton>
 #include <QLabel>
+#include <QGridLayout>
 
 #include "wfctile.h"
 
-static constexpr Vector2D BUTTON_DEFAULT_SIZE{100,30};
-static constexpr Vector2D SOLVE_BUTTON_OFFSET{250,50};
-static constexpr Vector2D RESET_BUTTON_OFFSET{125,50};
+static constexpr Vector2D BUTTON_CONTAINER_POSITION{250,50};
+static constexpr Vector2D TOPLEFT_STARTPOINT{0,0};
+
+static constexpr double MAP_WIDTH_FILL_FACTOR{0.70};
+static constexpr int ROWS_NUM{8};
+static constexpr int COLUMNS_NUM{8};
 
 void InitializeMainWindow(MainWindow* mainWindow);
+QLabel* CreateMap();
 
 int main(int argc, char *argv[])
 {
@@ -27,20 +32,47 @@ int main(int argc, char *argv[])
     return app.exec();
 }
 
+QLabel* CreateMap(){
+    auto mapLabel = new QLabel();
+    mapLabel->setStyleSheet("QLabel { background-color : Ivory; border: 3px solid black;}");
+    auto gridLayout = new QGridLayout(mapLabel);
+    gridLayout->setGeometry(QRect(0,0,mapLabel->width(), mapLabel->height()));
+
+    gridLayout->setHorizontalSpacing(0);
+    gridLayout->setVerticalSpacing(0);
+
+    gridLayout->setContentsMargins(0,0,0,0);
+
+    for(int rowIndex=0; rowIndex<ROWS_NUM; rowIndex++){
+        for(int columnIndex=0; columnIndex<COLUMNS_NUM; columnIndex++){
+            auto tileButton = new QPushButton("");
+            tileButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            gridLayout->addWidget(tileButton, columnIndex, rowIndex);
+        }
+    }
+
+    return mapLabel;
+}
+
 void InitializeMainWindow(MainWindow* mainWindow){
-    auto resetButton = std::make_unique<QPushButton>("Reset");
-    auto solveButton = std::make_unique<QPushButton>("Solve");
-    auto mainLabel = std::make_unique<QLabel>();
-    mainLabel->setStyleSheet("QLabel { background-color : Ivory; border: 3px solid black;}");
+    const auto& mapLabel = CreateMap();
 
-    resetButton->setFixedSize(BUTTON_DEFAULT_SIZE.X,BUTTON_DEFAULT_SIZE.Y);
-    solveButton->setFixedSize(BUTTON_DEFAULT_SIZE.X,BUTTON_DEFAULT_SIZE.Y);
+    const auto& buttonContainerWidget = new QWidget();
+    const auto& buttonVBox = new QVBoxLayout(buttonContainerWidget);
 
-    const Vector2D windowSize{mainWindow->size().width(),mainWindow->size().height()};
+    const auto& resetButton = new QPushButton("Reset");
+    const auto& solveButton = new QPushButton("Solve");
+    buttonVBox->addWidget(resetButton);
+    buttonVBox->addWidget(solveButton);
 
-    const Vector2D screenSize = {windowSize.X - 20, windowSize.Y - 2 * BUTTON_DEFAULT_SIZE.Y - 2};
-    mainWindow->AddWidget(std::move(mainLabel), screenSize, {10,5});
-    mainWindow->AddWidget(std::move(resetButton), BUTTON_DEFAULT_SIZE, windowSize-RESET_BUTTON_OFFSET);
-    mainWindow->AddWidget(std::move(solveButton), BUTTON_DEFAULT_SIZE, windowSize-SOLVE_BUTTON_OFFSET);
+    const int& squaredMapSide = mainWindow->width()*MAP_WIDTH_FILL_FACTOR;
+
+    const Vector2D screenSize = {squaredMapSide,squaredMapSide};
+
+    const Vector2D buttonSize = {int(squaredMapSide*0.25),squaredMapSide};
+    const Vector2D buttonPosition = {squaredMapSide,0};
+
+    mainWindow->AddWidget(mapLabel, screenSize, TOPLEFT_STARTPOINT);
+    mainWindow->AddWidget(buttonContainerWidget, buttonSize, buttonPosition);
 }
 
