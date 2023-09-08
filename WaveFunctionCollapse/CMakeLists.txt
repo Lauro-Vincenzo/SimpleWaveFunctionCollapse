@@ -42,6 +42,8 @@ else()
             ITilePresenter.h
             tilepresenter.h tilepresenter.cpp
             DataStructures.h
+            IMapManager.h
+            MapManagerImpl.h MapManagerImpl.cpp
         )
     endif()
 endif()
