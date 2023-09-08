@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include <QLayout>
-#include <QDesktopWidget>
+#include <QScreen>
 #include "./ui_mainwindow.h"
 #include "DataStructures.h"
 
@@ -11,8 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    const auto uiWidth = QDesktopWidget().availableGeometry(this).width()*WIDTH_SCALE_FACTOR;
-    const auto uiHeight = QDesktopWidget().availableGeometry(this).height()*HEIGHT_SCALE_FACTOR;
+    const auto screen = QGuiApplication::primaryScreen();
+    const auto uiWidth = screen->availableGeometry().width()*WIDTH_SCALE_FACTOR;
+    const auto uiHeight = screen->availableGeometry().height()*HEIGHT_SCALE_FACTOR;
     setFixedSize(uiWidth, uiHeight);
     ui->setupUi(this);
 }

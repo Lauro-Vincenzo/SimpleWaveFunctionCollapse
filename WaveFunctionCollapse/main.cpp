@@ -16,12 +16,14 @@ static constexpr Vector2D BUTTON_CONTAINER_POSITION{250,50};
 static constexpr Vector2D TOPLEFT_STARTPOINT{0,0};
 
 static constexpr double MAP_WIDTH_FILL_FACTOR{0.70};
-static constexpr int ROWS_NUM{12};
-static constexpr int COLUMNS_NUM{12};
+static constexpr int SIDE_CELL_NUM{4};
 
 static const char* PLACEHOLDER_IMAGE_PATH{"/home/vincenzo/Documents/C++/WaveFunctionCollapse/WaveFunctionCollapse/chopper.png"};
 
 void InitializeMainWindow(MainWindow* mainWindow);
+void _initializeGridLayout(QWidget* parentWidget);
+void _fillGridLayout(QGridLayout* gridLayout);
+
 QLabel* CreateMap();
 
 int main(int argc, char *argv[])
@@ -38,32 +40,39 @@ int main(int argc, char *argv[])
 QLabel* CreateMap(){
     auto mapLabel = new QLabel();
     mapLabel->setStyleSheet("QLabel { background-color : Ivory; border: 3px solid black;}");
-    auto gridLayout = new QGridLayout(mapLabel);
-    gridLayout->setGeometry(QRect(0,0,mapLabel->width(), mapLabel->height()));
+
+    _initializeGridLayout(mapLabel);
+
+    return mapLabel;
+}
+
+void _initializeGridLayout(QWidget* parentWidget){
+    auto gridLayout = new QGridLayout(parentWidget);
 
     gridLayout->setHorizontalSpacing(0);
     gridLayout->setVerticalSpacing(0);
-
     gridLayout->setContentsMargins(0,0,0,0);
 
-    for(int rowIndex=0; rowIndex<ROWS_NUM; rowIndex++){
-        for(int columnIndex=0; columnIndex<COLUMNS_NUM; columnIndex++){
+    _fillGridLayout(gridLayout);
+}
+
+void _fillGridLayout(QGridLayout* gridLayout) {
+    for(int rowIndex=0; rowIndex<SIDE_CELL_NUM; rowIndex++){
+        for(int columnIndex=0; columnIndex<SIDE_CELL_NUM; columnIndex++){
+
+            gridLayout->setColumnMinimumWidth(columnIndex,0);
+            gridLayout->setRowMinimumHeight(rowIndex,0);
+
             auto widget = new QWidget();
             auto tileButton = new QPushButton(widget);
+            tileButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            gridLayout->addWidget(tileButton, columnIndex, rowIndex);
 
             const auto* icon = new QIcon(PLACEHOLDER_IMAGE_PATH);
-
             tileButton->setIcon(*icon);
-            tileButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-            const auto& buttonSize = tileButton->size();
-
-            tileButton->setIconSize(buttonSize);
-            gridLayout->addWidget(tileButton, columnIndex, rowIndex);
+            tileButton->setIconSize(tileButton->size());
         }
     }
-
-    return mapLabel;
 }
 
 void InitializeMainWindow(MainWindow* mainWindow){
