@@ -22,10 +22,6 @@ MapManagerImpl::MapManagerImpl()
     _window->show();
 }
 
-void MapManagerImpl::SetMapSize(const int xExtent, const int yExtent){
-
-}
-
 void MapManagerImpl::InitializeMap(){
     const auto& mapLabel = _createMapLabel();
 

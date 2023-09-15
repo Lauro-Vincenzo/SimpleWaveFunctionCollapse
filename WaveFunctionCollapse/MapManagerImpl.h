@@ -12,7 +12,6 @@ class MapManagerImpl : public IMapManager
 {
 public:
     MapManagerImpl();
-    void SetMapSize(const int xExtent, const int yExtent) override;
     void InitializeMap() override;
 
 private:
