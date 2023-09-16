@@ -1,0 +1,4 @@
+#ifndef TILEINTERFACE_H
+#define TILEINTERFACE_H
+
+#endif // TILEINTERFACE_H

@@ -44,6 +44,9 @@ else()
             DataStructures.h
             IMapManager.h
             MapManagerImpl.h MapManagerImpl.cpp
+            TileInterface.h
+            TileImpl.h TileImpl.cpp
+            Tiles/BottomBorder.png Tiles/Crossroad.png Tiles/LeftBorder.png Tiles/LeftBottomCorner.png Tiles/LeftTopCorner.png Tiles/RightBorder.png Tiles/RightBottomCorner.png Tiles/RightTopCorner.png Tiles/Rock.png Tiles/Terrain.png Tiles/TopBorder.png Tiles/Tree.png Tiles/TriroadDown.png Tiles/TriroadLeft.png Tiles/TriroadRight.png Tiles/TriroadUp.png Tiles/TurnBottomLeft.png Tiles/TurnBottomRight.png Tiles/TurnUpLeft.png Tiles/TurnUpRight.png Tiles/VerticalRoad.png
         )
     endif()
 endif()

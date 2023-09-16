@@ -11,9 +11,9 @@ static constexpr Vector2D BUTTON_CONTAINER_POSITION{250,50};
 static constexpr Vector2D TOPLEFT_STARTPOINT{0,0};
 
 static constexpr double MAP_WIDTH_FILL_FACTOR{0.70};
-static constexpr int SIDE_CELL_NUM{4};
+static constexpr int SIDE_CELL_NUM{16};
 
-static const char* PLACEHOLDER_IMAGE_PATH{"/home/vincenzo/Documents/C++/WaveFunctionCollapse/WaveFunctionCollapse/chopper.png"};
+static const char* PLACEHOLDER_IMAGE_PATH{"/home/vincenzo/Documents/C++/WaveFunctionCollapse/WaveFunctionCollapse/Tiles/Crossroad.png"};
 
 
 MapManagerImpl::MapManagerImpl()
