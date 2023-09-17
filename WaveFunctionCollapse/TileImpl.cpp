@@ -1,6 +1,5 @@
 #include "TileImpl.h"
 
-TileImpl::TileImpl()
-{
-
-}
+//ITilePresenter* TileImpl::GetTilePresenter() const{
+//    return _presenter.get();
+//}

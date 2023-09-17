@@ -1,11 +1,16 @@
 #ifndef TILEIMPL_H
 #define TILEIMPL_H
 
+#include <memory>
 
-class TileImpl : public ITile
-{
+#include "TileInterface.h"
+//#include "ITilePresenter.h"
+
+class TileImpl : public ITile{
 public:
-    TileImpl();
+    ITilePresenter* GetTilePresenter() const;
+private:
+    //std::unique_ptr<ITilePresenter> _presenter{nullptr};
 };
 
 #endif // TILEIMPL_H
