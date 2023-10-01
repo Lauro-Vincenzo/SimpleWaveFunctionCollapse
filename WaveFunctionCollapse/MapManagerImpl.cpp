@@ -6,6 +6,7 @@
 #include <QLabel>
 
 #include "DataStructures.h"
+#include "TileImpl.h"
 
 static constexpr Vector2D BUTTON_CONTAINER_POSITION{250,50};
 static constexpr Vector2D TOPLEFT_STARTPOINT{0,0};
@@ -20,6 +21,8 @@ MapManagerImpl::MapManagerImpl()
 {
     _window = std::make_unique<MainWindow>();
     _window->show();
+    const auto tile = new TileImpl();
+    delete tile;
 }
 
 void MapManagerImpl::InitializeMap(){
